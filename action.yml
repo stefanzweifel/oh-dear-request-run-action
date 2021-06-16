@@ -1,0 +1,26 @@
+name: Request Run for Oh Dear
+description: Trigger a new run for an Oh Dear site.
+
+author: Stefan Zweifel <hello@stefanzweifel.io>
+
+inputs:
+  oh_dear_token:
+    description: Valid API token to communicate with the Oh Dear API.
+    required: true
+  check_id:
+    description: The ID of the check that should run.
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        curl -X POST "https://ohdear.app/api/checks/${{ inputs.CHECK_ID }}/request-run" \
+        -H "Authorization: Bearer ${{ inputs.OH_DEAR_TOKEN }}" \
+        -H "Accept: application/json" \
+        -H "Content-Type: application/json"
+      shell: bash
+
+branding:
+  icon: zap
+  color: blue
